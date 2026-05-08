@@ -2,7 +2,7 @@ import { Button } from "#components/ui/button.jsx";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Inputs from "./components/Inputs.jsx";
-import Footer from "./components/ui/Footer";
+import Footer from "./components/Footer";
 
 function App() {
   return (
