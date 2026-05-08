@@ -1,9 +1,15 @@
 import "./App.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/ui/Footer";
 
 function App() {
   return (
-    <div>
-      <h1 className="text-9xl">Hello World!</h1>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-grow">
+        
+      </main>
+      <Footer />
     </div>
   );
 }
