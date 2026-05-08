@@ -1,16 +1,34 @@
 import "./App.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/ui/Footer";
+import Auth from "./pages/Auth";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import MainLayout from "./layouts/MainLayout";
+import EmptyLayout from "./layouts/EmptyLayout";
+import Test from "./pages/Test";
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">
-        
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+
+        {/* WITH NAVBAR + FOOTER */}
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Test />} />
+          {/* <Route path="/about" element={<About />} /> */}
+        </Route>
+
+        {/* WITHOUT NAVBAR + FOOTER */}
+        <Route element={<EmptyLayout />}>
+          <Route path="/login" element={<Auth />} />
+          {/* <Route path="/register" element={<Register />} /> */}
+        </Route>
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 
