@@ -23,12 +23,6 @@ function formatDate(date) {
         year: "numeric",
     })
 }
-function isValidDate(date) {
-    if (!date) {
-        return false
-    }
-    return !isNaN(date.getTime())
-}
 export default function DatePicker({ fieldName, subFieldName }) {
     const [open, setOpen] = React.useState(false)
     const [date, setDate] = React.useState(undefined)
@@ -48,36 +42,35 @@ export default function DatePicker({ fieldName, subFieldName }) {
       </div>
 
       {/* Input */}
-       <InputGroup>
+       <InputGroup className="border-black">
         <InputGroupInput
           id="date-required"
           value={value}
           placeholder="June 01, 2025"
-          onChange={(e) => {
-            const date = new Date(e.target.value)
-            setValue(e.target.value)
-            if (isValidDate(date)) {
-              setDate(date)
-              setMonth(date)
-            }
-          }}
+          readOnly
           onKeyDown={(e) => {
             if (e.key === "ArrowDown") {
               e.preventDefault()
               setOpen(true)
             }
           }}
+          onClick={() => setOpen(true)}
         />
         <InputGroupAddon align="inline-end">
           <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger render={<InputGroupButton id="date-picker" variant="ghost" size="icon-xs" aria-label="Select date"><CalendarIcon /><span className="sr-only">Select date</span></InputGroupButton>} />
+            <PopoverTrigger asChild>
+              <InputGroupButton id="date-picker" variant="ghost" size="icon-xs" aria-label="Select date">
+                <CalendarIcon />
+                <span className="sr-only">Select date</span>
+              </InputGroupButton>
+            </PopoverTrigger>
             <PopoverContent
-              className="w-auto overflow-hidden p-0"
+              className="w-auto overflow-hidden p-0 border border-black ring-0!"
               align="end"
               alignOffset={-8}
               sideOffset={10}
             >
-              <Calendar
+              <Calendar 
                 mode="single"
                 selected={date}
                 month={month}
