@@ -1,3 +1,4 @@
+import { Button } from "#components/ui/button.jsx";
 import "./App.css";
 import Auth from "./pages/Auth";
 import {
@@ -9,6 +10,7 @@ import {
 import MainLayout from "./layouts/MainLayout";
 import EmptyLayout from "./layouts/EmptyLayout";
 import Test from "./pages/Test";
+import LoaForms from "./pages/LoaForms";
 
 function App() {
   return (
@@ -17,7 +19,7 @@ function App() {
 
         {/* WITH NAVBAR + FOOTER */}
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Test />} />
+          <Route path="/" element={<LoaForms />} />
           {/* <Route path="/about" element={<About />} /> */}
         </Route>
 

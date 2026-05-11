@@ -1,7 +1,7 @@
 import adduLogo from "../assets/addu-white.png";
 
 export default function Navbar() {
-  const userName = "Korem Ipsum Dolor";
+  const userName = "Lorem Ipsum Dolor";
   const userEmail = "email@addu.edu.ph";
   const firstLetter = userName.split(" ")[0][0].toUpperCase();
 
