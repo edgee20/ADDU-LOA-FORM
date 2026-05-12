@@ -10,7 +10,7 @@ function ReinForm() {
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow px-5 py-15">
         <div className="min-w-xl pl-40 pr-40">
-          <h1 className="text-2xl font-bold mb-6" style={{ fontFamily: "Trajan Pro" }}>REINSTATEMENT FORM</h1>
+          <h1 className="text-2xl font-bold mb-6" style={{ fontFamily: "Trajan Pro Regular" }}>REINSTATEMENT FORM</h1>
 
           {/* Grid Layout for Form Fields */}
           <div className="grid grid-cols-2 gap-6">
