@@ -10,7 +10,7 @@ export default function UserInfo({ user }) {
         {firstLetter}
       </div>
 
-      <div className="text-white">
+      <div className="text-white hidden md:block">
         <div className="text-lg font-semibold">
           {user.firstName} {user.lastName}
         </div>
