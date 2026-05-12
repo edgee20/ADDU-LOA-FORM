@@ -1,3 +1,5 @@
+import DropDown from "./DropDown";
+
 export default function UserInfo({ user }) {
   //   const user = { firstName: "Ken", lastName: "Liu", email: "efliu@addu.edu.ph" };
   const firstLetter = user.firstName.split(" ")[0][0].toUpperCase();

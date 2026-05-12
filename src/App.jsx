@@ -14,7 +14,7 @@ function App() {
       <Routes>
         {/* WITH NAVBAR + FOOTER */}
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Test />} />
+          <Route path="/" element={<LoaForms />} />
           {/* <Route path="/about" element={<About />} /> */}
         </Route>
 

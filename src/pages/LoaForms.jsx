@@ -3,6 +3,7 @@ import "../App.css";
 import Navbar from "#components/Navbar";
 import Inputs from "#components/Inputs.jsx";
 import Footer from "#components/Footer";
+import { DialogDemo } from "../components/Modal";
 
 function LoaForm() {
   return (
@@ -76,13 +77,14 @@ function LoaForm() {
             <Button variant="outline" className="w-26 h-9">
               Clear
             </Button>
-            <Button
+
+            <DialogDemo
               variant="default"
               style={{ backgroundColor: "#2F3590" }}
               className="text-white w-41 h-10"
             >
               Submit
-            </Button>
+            </DialogDemo>
           </div>
         </div>
       </main>

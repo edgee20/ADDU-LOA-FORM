@@ -18,7 +18,9 @@ export function DialogDemo() {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline">Submit</Button>
+          <Button variant="default"
+              style={{ backgroundColor: "#2F3590" }}
+              className="text-white w-41 h-10">Submit</Button>
         </DialogTrigger>
         <DialogContent className="w-[450px] h-[220px] p-[25px] rounded-lg border-2 border-gray-300">
           <DialogHeader className="mb-auto">
