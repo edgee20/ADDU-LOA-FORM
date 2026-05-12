@@ -42,12 +42,13 @@ export default function DatePicker({ fieldName, subFieldName }) {
       </div>
 
       {/* Input */}
-       <InputGroup className="border-black">
+       <InputGroup className="h-10 w-full min-w-0 rounded-lg border border-black bg-transparent">
         <InputGroupInput
           id="date-required"
           value={value}
           placeholder="June 01, 2025"
           readOnly
+          className="h-10 w-full min-w-0 rounded-lg border-0 bg-transparent px-2.5 py-1 text-base outline-none placeholder:text-muted-foreground focus-visible:outline-none"
           onKeyDown={(e) => {
             if (e.key === "ArrowDown") {
               e.preventDefault()

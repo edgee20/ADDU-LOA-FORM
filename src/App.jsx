@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import MainLayout from "./layouts/MainLayout";
 import EmptyLayout from "./layouts/EmptyLayout";
-import LoaForms from "./pages/LoaForms";
+import ReinForms from "./pages/ReinForms";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Routes>
         {/* WITH NAVBAR + FOOTER */}
         <Route element={<MainLayout />}>
-          <Route path="/" element={<LoaForms />} />
+          <Route path="/" element={<ReinForms />} />
           {/* <Route path="/about" element={<About />} /> */}
         </Route>
 

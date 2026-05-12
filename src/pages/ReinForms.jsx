@@ -3,13 +3,14 @@ import "../App.css";
 import Navbar from "#components/Navbar";
 import Inputs from "#components/Inputs.jsx";
 import Footer from "#components/Footer";
+import DatePicker from "#components/DatePicker.jsx";
 
-function LoaForm() {
+function ReinForm() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow px-5 py-15">
         <div className="min-w-xl pl-40 pr-40">
-          <h1 className="text-2xl font-bold mb-6">Leave of Absence Form</h1>
+          <h1 className="text-2xl font-bold mb-6" style={{ fontFamily: "Trajan Pro" }}>REINSTATEMENT FORM</h1>
 
           {/* Grid Layout for Form Fields */}
           <div className="grid grid-cols-2 gap-6">
@@ -17,7 +18,7 @@ function LoaForm() {
             <div>
               <Inputs
                 fieldName={"Email"}
-                subFieldName={"Ex. efliu@addu.edu.ph"}
+                subFieldName={"Ex. example@addu.edu.ph"}
                 placeholder={"Enter email here"}
               ></Inputs>
             </div>
@@ -38,15 +39,6 @@ function LoaForm() {
             </div>
             <div>
               <Inputs
-                fieldName={"Last Semester Attended"}
-                subFieldName={"Ex. 1st & 2026"}
-                placeholder={"Enter Last Semester Attended"}
-              ></Inputs>
-            </div>
-
-            {/* Row 3 - Current Course (spans left side or full) */}
-            <div>
-              <Inputs
                 fieldName={"Current Course"}
                 subFieldName={"BS Tourism"}
                 placeholder={"Select a course"}
@@ -59,6 +51,22 @@ function LoaForm() {
                   "BS Nursing",
                 ]}
               ></Inputs>
+            </div>
+
+            {/* Row 3 */}
+            <div>
+              <Inputs
+                fieldName={"Last Semester Attended"}
+                subFieldName={"Ex. 1st & 2026"}
+                placeholder={"Enter Last Semester Attended"}
+              ></Inputs>
+            </div>
+
+            <div>
+              <DatePicker 
+                fieldName={"Date of LOA"}
+                subFieldName={"Select date"}
+              ></DatePicker>
             </div>
 
             {/* Row 4 - Reason for LOA (Full Width) */}
@@ -90,4 +98,4 @@ function LoaForm() {
   );
 }
 
-export default LoaForm;
+export default ReinForm;
