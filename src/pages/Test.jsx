@@ -1,7 +1,9 @@
-import DropDown from "../components/DropDown";
+import { DialogDemo } from "../components/Modal";
 
-export default function Test(){
-    return(<div className="">
-            <DropDown fieldName="Current Course" />
-        </div>);
+export default function Test() {
+  return (
+    <div className="">
+      <DialogDemo />
+    </div>
+  );
 }
