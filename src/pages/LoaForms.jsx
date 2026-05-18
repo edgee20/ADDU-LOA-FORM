@@ -2,6 +2,7 @@ import { Button } from "#components/ui/button.jsx";
 import "../App.css";
 import Inputs from "#components/Inputs.jsx";
 import DropDown from "#components/DropDown";
+import DragFile from "#components/DragFile.jsx";
 
 function LoaForm() {
   return (
@@ -51,6 +52,14 @@ function LoaForm() {
             <div className="col-span-2">
               <Inputs fieldName={"Reason for LOA"} isTextarea={true}></Inputs>
             </div>
+          </div>
+
+          {/* Row 5 - File Upload (Full Width) */}
+          <div className="pt-6 col-span-1 md:col-span-2 lg:col-span-3">
+            <div className="pb-2">
+              <h2 className="text-sm">Upload Supporting Documents</h2>
+            </div>
+            <DragFile maxFiles={5} maxSize={50 * 1024 * 1024} />
           </div>
 
           {/* Buttons */}
