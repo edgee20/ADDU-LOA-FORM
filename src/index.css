@@ -3,6 +3,11 @@
 @import "shadcn/tailwind.css";
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
+@font-face {
+  font-family: "TrajanPro-Regular";
+  src: url("./assets/fonts/TrajanPro-Regular.ttf") format("truetype");
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

@@ -1,4 +1,4 @@
-import adduLogo from "../assets/addu-white.png";
+import adduLogo from "../assets/images/addu-white.png";
 import UserInfo from "./UserInfo";
 
 export default function Navbar({ user }) {

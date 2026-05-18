@@ -6,17 +6,36 @@ import {
   SelectTrigger,
   SelectValue,
 } from "#components/ui/select";
-export default function DropDown({ fieldName, subFieldName }) {
-  const dummyData = [
-    { course: "Bachelor of Science in Computer Science" },
-    { course: "Bachelor of Science in Information Technology" },
-    { course: "Bachelor of Science in Information Systems" },
+export default function DropDown({
+  fieldName,
+  subFieldName,
+  options,
+  placeholder,
+  value,
+  onValueChange,
+  error,
+}) {
+  const defaultOptions = [
+    {
+      value: "Bachelor of Science in Computer Science",
+      label: "Bachelor of Science in Computer Science",
+    },
+    {
+      value: "Bachelor of Science in Information Technology",
+      label: "Bachelor of Science in Information Technology",
+    },
+    {
+      value: "Bachelor of Science in Information Systems",
+      label: "Bachelor of Science in Information Systems",
+    },
   ];
+
+  const items = options || defaultOptions;
 
   return (
     <div className="dropdown">
       <Field>
-        <div className="pb-2">
+        <div className="">
           <h1 className="text-sm ">
             {fieldName}
             {subFieldName && (
@@ -25,20 +44,26 @@ export default function DropDown({ fieldName, subFieldName }) {
             <span className="text-[#E9222E] ml-2">*</span>
           </h1>
         </div>
-        <Select defaultValue="" className="">
-          <SelectTrigger id="form-country" className="border-black !h-10">
-            <SelectValue placeholder="Select a course" />
+        <Select value={value} onValueChange={onValueChange}>
+          <SelectTrigger
+            id={`select-${fieldName.toLowerCase().replace(/\s+/g, "-")}`}
+            className={`!h-10 ${error ? "border-red-500" : "border-black"}`}
+          >
+            <SelectValue
+              placeholder={placeholder || `Select a ${fieldName.toLowerCase()}`}
+            />
           </SelectTrigger>
           <SelectContent>
-            {dummyData.map((item, index) => {
+            {items.map((item, index) => {
               return (
-                <SelectItem key={index} value={item.course}>
-                  {item.course}
+                <SelectItem key={index} value={item.value}>
+                  {item.label}
                 </SelectItem>
               );
             })}
           </SelectContent>
         </Select>
+        {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
       </Field>
     </div>
   );
