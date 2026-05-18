@@ -1,11 +1,8 @@
-import { Button } from "#components/ui/button.jsx";
 import "./App.css";
 import Auth from "./pages/Auth";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import MainLayout from "./layouts/MainLayout";
 import EmptyLayout from "./layouts/EmptyLayout";
-import Test from "./pages/Test";
 import LoaForms from "./pages/LoaForms";
 
 function App() {
