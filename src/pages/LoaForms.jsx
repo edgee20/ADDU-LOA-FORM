@@ -31,10 +31,26 @@ function LoaForm() {
   const handleInputChange = (field) => (event) => {
     const { value } = event.target;
     setFormValues((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => {
+      if (!prev[field]) {
+        return prev;
+      }
+      const nextErrors = { ...prev };
+      delete nextErrors[field];
+      return nextErrors;
+    });
   };
 
   const handleSelectChange = (field) => (value) => {
     setFormValues((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => {
+      if (!prev[field]) {
+        return prev;
+      }
+      const nextErrors = { ...prev };
+      delete nextErrors[field];
+      return nextErrors;
+    });
   };
 
   useEffect(() => {
