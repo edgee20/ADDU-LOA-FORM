@@ -34,7 +34,7 @@ export default function DropDown({
 
   return (
     <div className="dropdown">
-      <Field>
+      <Field data-invalid={Boolean(error)}>
         <div className="">
           <h1 className="text-sm ">
             {fieldName}
@@ -47,7 +47,12 @@ export default function DropDown({
         <Select value={value} onValueChange={onValueChange}>
           <SelectTrigger
             id={`select-${fieldName.toLowerCase().replace(/\s+/g, "-")}`}
-            className={`!h-10 ${error ? "border-red-500" : "border-black"}`}
+            aria-invalid={Boolean(error)}
+            className={`!h-10 ${
+              error
+                ? "border-red-500 focus-visible:ring-3 focus-visible:ring-red-500/30"
+                : "border-black"
+            }`}
           >
             <SelectValue
               placeholder={placeholder || `Select a ${fieldName.toLowerCase()}`}
@@ -63,7 +68,7 @@ export default function DropDown({
             })}
           </SelectContent>
         </Select>
-        {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+        {error && <p className=" text-xs text-red-600">{error}</p>}
       </Field>
     </div>
   );
