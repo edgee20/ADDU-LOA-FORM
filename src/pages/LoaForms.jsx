@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "#components/ui/button.jsx";
 import "../App.css";
 import Inputs from "#components/Inputs.jsx";
@@ -24,6 +24,9 @@ function LoaForm() {
   const [errors, setErrors] = useState({});
   const [isClearOpen, setIsClearOpen] = useState(false);
   const [isSubmitOpen, setIsSubmitOpen] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [coursesError, setCoursesError] = useState("");
+  const [isCoursesLoading, setIsCoursesLoading] = useState(false);
 
   const handleInputChange = (field) => (event) => {
     const { value } = event.target;
@@ -33,6 +36,53 @@ function LoaForm() {
   const handleSelectChange = (field) => (value) => {
     setFormValues((prev) => ({ ...prev, [field]: value }));
   };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchCourses = async () => {
+      setIsCoursesLoading(true);
+      setCoursesError("");
+
+      try {
+        const response = await fetch(
+          "https://account-uan.addu.edu.ph/api/==QN9lo918JcjDkrnhge93crDhyA2UuwVjGMOZcsnV==/addu-programs-offered",
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to load courses.");
+        }
+
+        const data = await response.json();
+        const nextCourses = Array.isArray(data)
+          ? data.map((course) => ({
+              value: course.CODE,
+              label: course.DESCRIPTION,
+            }))
+          : [];
+
+        if (isMounted) {
+          setCourses(nextCourses);
+        }
+      } catch (error) {
+        if (isMounted) {
+          setCoursesError(
+            error instanceof Error ? error.message : "Unable to load courses.",
+          );
+        }
+      } finally {
+        if (isMounted) {
+          setIsCoursesLoading(false);
+        }
+      }
+    };
+
+    fetchCourses();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const validateForm = () => {
     const nextErrors = {};
@@ -125,7 +175,11 @@ function LoaForm() {
                 fieldName={"Current Course"}
                 value={formValues.currentCourse}
                 onValueChange={handleSelectChange("currentCourse")}
-                error={errors.currentCourse}
+                error={errors.currentCourse || coursesError}
+                placeholder={
+                  isCoursesLoading ? "Loading courses..." : "Select a course"
+                }
+                options={courses}
               />
             </div>
 
