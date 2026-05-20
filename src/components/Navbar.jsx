@@ -1,5 +1,6 @@
 import adduLogo from "../assets/images/addu-white.png";
 import UserInfo from "./UserInfo";
+import UserProfile from "./UserProfile";
 
 export default function Navbar({ user }) {
   return (
@@ -22,7 +23,7 @@ export default function Navbar({ user }) {
         </div>
       </div>
 
-      <UserInfo user={user} />
+      <UserProfile user={user} />
     </header>
   );
 }

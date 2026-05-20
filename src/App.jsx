@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import EmptyLayout from "./layouts/EmptyLayout";
 import LoaForms from "./pages/LoaForms";
+import Submit from "./pages/Submit";
+import Reject from "./pages/Reject";
 
 function App() {
   return (
@@ -12,7 +14,8 @@ function App() {
         {/* WITH NAVBAR + FOOTER */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<LoaForms />} />
-          {/* <Route path="/about" element={<About />} /> */}
+          {<Route path="/Submit" element={<Submit />} />}
+          {<Route path="/Reject" element={<Reject />} />}
         </Route>
 
         {/* WITHOUT NAVBAR + FOOTER */}

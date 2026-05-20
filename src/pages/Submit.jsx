@@ -1,0 +1,43 @@
+import { CheckCircle2 } from "lucide-react";
+import { Button } from "../components/ui/button";
+
+function Submit() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4">
+      {/* Success Checkmark */}
+      <div className="mb-8">
+        <CheckCircle2 className="w-20 h-20 text-green-500" strokeWidth={1.5} />
+      </div>
+
+      {/* Success Heading */}
+      <h1
+        className="text-5xl font-bold text-center mb-6"
+        style={{ fontFamily: "Trajan Pro, serif" }}
+      >
+        Success
+      </h1>
+
+      {/* Message Text */}
+      <p className="text-center text-gray-600 mb-8 max-w-md text-lg">
+        Your request for reinstatement was sent successfully.
+        <br />
+        Please check your email to continue.
+      </p>
+
+      {/* Continue Button */}
+      <Button
+        variant="default"
+              style={{ backgroundColor: "#2F3590" }}
+              className="text-white w-41 h-12"
+        onClick={() => {
+          // Handle continue action
+          console.log("Continue clicked");
+        }}
+      >
+        Continue
+      </Button>
+    </div>
+  );
+}
+
+export default Submit;

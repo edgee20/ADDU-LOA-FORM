@@ -16,6 +16,7 @@ const initialFormValues = {
   lastSemester: "",
   reason: "",
 };
+import DragFile from "#components/DragFile.jsx";
 
 function LoaForm() {
   const currentYear = useMemo(() => new Date().getFullYear(), []);
@@ -198,6 +199,14 @@ function LoaForm() {
                 isTextarea={true}
               />
             </div>
+          </div>
+
+          {/* Row 5 - File Upload (Full Width) */}
+          <div className="pt-6 col-span-1 md:col-span-2 lg:col-span-3">
+            <div className="pb-2">
+              <h2 className="text-sm">Upload Supporting Documents</h2>
+            </div>
+            <DragFile maxFiles={5} maxSize={50 * 1024 * 1024} />
           </div>
 
           {/* Buttons */}
