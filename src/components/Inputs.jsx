@@ -15,7 +15,7 @@ export default function Inputs({
     <div className={className}>
       {/* Field Name */}
       <div className="pb-2">
-        <h1 className="text-sm ">
+        <h1 className={`text-sm ${error ? "text-red-600" : ""}`}>
           {fieldName}
           {subFieldName && (
             <span className="text-[10px] ml-2">{subFieldName}</span>

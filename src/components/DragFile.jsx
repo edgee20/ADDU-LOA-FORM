@@ -1,12 +1,24 @@
 import { Upload, X, File } from "lucide-react";
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "#components/ui/button.jsx";
 
-const DragFile = ({ maxFiles = 5, maxSize = 50 * 1024 * 1024, onUpload }) => {
+const DragFile = ({
+  maxFiles = 5,
+  maxSize = 50 * 1024 * 1024,
+  onUpload,
+  resetToken,
+}) => {
   const [files, setFiles] = useState([]);
   const [isDragActive, setIsDragActive] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    setFiles([]);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }, [resetToken]);
 
   // Format file size for display
   const formatFileSize = (bytes) => {

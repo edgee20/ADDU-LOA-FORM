@@ -27,6 +27,7 @@ function LoaForm() {
   const [courses, setCourses] = useState([]);
   const [coursesError, setCoursesError] = useState("");
   const [isCoursesLoading, setIsCoursesLoading] = useState(false);
+  const [fileResetKey, setFileResetKey] = useState(0);
 
   const handleInputChange = (field) => (event) => {
     const { value } = event.target;
@@ -148,6 +149,7 @@ function LoaForm() {
   const handleClear = () => {
     setFormValues(initialFormValues);
     setErrors({});
+    setFileResetKey((prev) => prev + 1);
   };
 
   const handleSubmit = () => {
@@ -276,7 +278,11 @@ function LoaForm() {
             <div className="pb-2">
               <h2 className="text-sm">Upload Supporting Documents</h2>
             </div>
-            <DragFile maxFiles={5} maxSize={50 * 1024 * 1024} />
+            <DragFile
+              maxFiles={5}
+              maxSize={50 * 1024 * 1024}
+              resetToken={fileResetKey}
+            />
           </div>
 
           {/* Buttons */}
