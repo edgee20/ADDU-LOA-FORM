@@ -10,7 +10,11 @@ export default function Inputs({
   onChange,
   error,
   isTextarea = false,
+  readOnly = false,
 }) {
+  const readOnlyClass = readOnly
+    ? "bg-gray-100 text-gray-900 border-gray-300 pointer-events-none"
+    : "";
   return (
     <div className={className}>
       {/* Field Name */}
@@ -31,12 +35,13 @@ export default function Inputs({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          readOnly={readOnly}
           rows={5}
           className={`w-full min-w-0 rounded-lg border bg-transparent px-2.5 py-1 text-base transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-3 disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50 resize-none ${
             error
               ? "border-red-500 focus-visible:ring-red-500/30"
               : "border-black focus-visible:border-black focus-visible:ring-ring/50"
-          }`}
+          } ${readOnlyClass}`}
           aria-invalid={Boolean(error)}
         />
       ) : (
@@ -45,8 +50,11 @@ export default function Inputs({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          readOnly={readOnly}
           className={
-            error ? "border-red-500 focus-visible:ring-red-500/30" : ""
+            error
+              ? "border-red-500 focus-visible:ring-red-500/30"
+              : readOnlyClass
           }
           aria-invalid={Boolean(error)}
         />

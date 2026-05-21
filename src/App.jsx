@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import EmptyLayout from "./layouts/EmptyLayout";
 import LoaForms from "./pages/LoaForms";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminReview from "./pages/AdminReview";
 import Submit from "./pages/Submit";
 import Reject from "./pages/Reject";
 
@@ -13,6 +15,8 @@ function App() {
       <Routes>
         {/* WITH NAVBAR + FOOTER */}
         <Route element={<MainLayout />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/:id" element={<AdminReview />} />
           <Route path="/" element={<LoaForms />} />
           {<Route path="/Submit" element={<Submit />} />}
           {<Route path="/Reject" element={<Reject />} />}

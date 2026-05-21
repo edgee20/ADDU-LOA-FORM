@@ -6,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "#components/ui/select";
+
 export default function DropDown({
   fieldName,
   subFieldName,
@@ -14,7 +15,15 @@ export default function DropDown({
   value,
   onValueChange,
   error,
+  disabled = false,
+  hideLabel = false,
+  required = true,
+  triggerClassName = "",
+  wrapperClassName = "dropdown",
 }) {
+  const disabledClass = disabled
+    ? "bg-gray-100 text-gray-900 border-gray-300 pointer-events-none disabled:opacity-100"
+    : "";
   const defaultOptions = [
     {
       value: "Bachelor of Science in Computer Science",
@@ -33,18 +42,20 @@ export default function DropDown({
   const items = options || defaultOptions;
 
   return (
-    <div className="dropdown">
+    <div className={wrapperClassName}>
       <Field data-invalid={Boolean(error)}>
-        <div className="">
-          <h1 className="text-sm ">
-            {fieldName}
-            {subFieldName && (
-              <span className="text-[10px] ml-2">{subFieldName}</span>
-            )}
-            <span className="text-[#E9222E] ml-2">*</span>
-          </h1>
-        </div>
-        <Select value={value} onValueChange={onValueChange}>
+        {!hideLabel && (
+          <div>
+            <h1 className="text-sm">
+              {fieldName}
+              {subFieldName && (
+                <span className="text-[10px] ml-2">{subFieldName}</span>
+              )}
+              {required && <span className="text-[#E9222E] ml-2">*</span>}
+            </h1>
+          </div>
+        )}
+        <Select value={value} onValueChange={onValueChange} disabled={disabled}>
           <SelectTrigger
             id={`select-${fieldName.toLowerCase().replace(/\s+/g, "-")}`}
             aria-invalid={Boolean(error)}
@@ -52,23 +63,21 @@ export default function DropDown({
               error
                 ? "border-red-500 focus-visible:ring-3 focus-visible:ring-red-500/30"
                 : "border-black"
-            }`}
+            } ${disabledClass} ${triggerClassName}`}
           >
             <SelectValue
               placeholder={placeholder || `Select a ${fieldName.toLowerCase()}`}
             />
           </SelectTrigger>
           <SelectContent>
-            {items.map((item, index) => {
-              return (
-                <SelectItem key={index} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              );
-            })}
+            {items.map((item, index) => (
+              <SelectItem key={index} value={item.value}>
+                {item.label}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
-        {error && <p className=" text-xs text-red-600">{error}</p>}
+        {error && <p className="text-xs text-red-600">{error}</p>}
       </Field>
     </div>
   );
