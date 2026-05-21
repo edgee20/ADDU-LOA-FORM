@@ -97,7 +97,7 @@ export default function AdminDashboard() {
           Leave of Absence Submissions
         </h1>
 
-        <div className="flex flex-col md:flex-row gap-3 items-start md:items-center mb-4">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center mb-4">
           <div className="relative w-full md:w-1/3">
             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
               <svg
@@ -125,11 +125,11 @@ export default function AdminDashboard() {
               placeholder="Search submission"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full rounded-md border border-gray-300 bg-white px-9 py-2 text-sm text-gray-700 placeholder:text-gray-400"
+              className="h-8 w-full rounded-md border border-gray-300 bg-white px-9 text-sm text-gray-700 placeholder:text-gray-400"
             />
           </div>
 
-          <div className="flex gap-2 ml-auto items-center">
+          <div className="flex flex-wrap items-center gap-2 md:ml-auto md:flex-1 md:justify-end">
             <DropDown
               fieldName="Range"
               hideLabel
@@ -251,15 +251,25 @@ export default function AdminDashboard() {
               {pageRows.map((row) => (
                 <tr
                   key={row.id}
-                  className="border-t hover:bg-gray-50 cursor-pointer"
+                  className="group border-t cursor-pointer"
                   onClick={() => navigate(`/admin/${row.id}`)}
                 >
-                  <td className="p-3">{row.name}</td>
-                  <td className="p-3 text-sm text-gray-600">{row.email}</td>
-                  <td className="p-3">{row.department}</td>
-                  <td className="p-3">{row.course}</td>
-                  <td className="p-3">{row.date}</td>
-                  <td className="p-3">
+                  <td className="p-3 transition-colors group-hover:bg-gray-200">
+                    {row.name}
+                  </td>
+                  <td className="p-3 text-sm text-gray-600 transition-colors group-hover:bg-gray-200">
+                    {row.email}
+                  </td>
+                  <td className="p-3 transition-colors group-hover:bg-gray-200">
+                    {row.department}
+                  </td>
+                  <td className="p-3 transition-colors group-hover:bg-gray-200">
+                    {row.course}
+                  </td>
+                  <td className="p-3 transition-colors group-hover:bg-gray-200">
+                    {row.date}
+                  </td>
+                  <td className="p-3 transition-colors group-hover:bg-gray-200">
                     <span
                       className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
                         row.status === "Approved"
