@@ -1,14 +1,17 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "#components/ui/button.jsx";
 import Inputs from "#components/Inputs.jsx";
 import DropDown from "#components/DropDown.jsx";
+import ConfirmationDialog from "#components/ConfirmationDialog.jsx";
 
 const steps = ["Dept. Chair", "Asst. Dean", "Dean", "Registrar"];
 
 export default function AdminReview() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [isRejectOpen, setIsRejectOpen] = useState(false);
+  const [isApproveOpen, setIsApproveOpen] = useState(false);
   const data = useMemo(
     () => ({
       email: "efliu@addu.edu.ph",
@@ -133,17 +136,36 @@ export default function AdminReview() {
           <Button
             variant="outline"
             className="border-red-500 text-red-600 hover:bg-red-50"
-            onClick={() => navigate("/Reject")}
+            onClick={() => setIsRejectOpen(true)}
           >
             Reject
           </Button>
           <Button
             className="bg-[#0b1260] text-white hover:bg-[#0a104e]"
-            onClick={() => navigate("/Submit")}
+            onClick={() => setIsApproveOpen(true)}
           >
             Approve
           </Button>
         </div>
+
+        <ConfirmationDialog
+          isOpen={isRejectOpen}
+          onClose={() => setIsRejectOpen(false)}
+          onConfirm={() => navigate("/Reject")}
+          title="REJECT SUBMISSION"
+          description="Are you sure you want to reject this form submission? This action cannot be undone."
+          confirmText="Reject"
+          confirmVariant="destructive"
+        />
+
+        <ConfirmationDialog
+          isOpen={isApproveOpen}
+          onClose={() => setIsApproveOpen(false)}
+          onConfirm={() => navigate("/Submit")}
+          title="APPROVE SUBMISSION"
+          description="Are you sure you want to approve this form submission? This action cannot be undone."
+          confirmText="Approve"
+        />
       </div>
     </div>
   );

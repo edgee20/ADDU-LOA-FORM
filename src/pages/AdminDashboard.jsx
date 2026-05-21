@@ -34,6 +34,8 @@ const courses = [
   "Juris Doctor",
 ];
 
+const statuses = ["Pending", "Approved", "Rejected"];
+
 const sampleData = Array.from({ length: 12 }).map((_, i) => ({
   id: i + 1,
   name: "Lucas Brandon P. Santos",
@@ -41,7 +43,7 @@ const sampleData = Array.from({ length: 12 }).map((_, i) => ({
   course: courses[i % courses.length],
   department: departments[i % departments.length],
   date: "May 6, 2026",
-  status: i % 2 === 0 ? "Pending" : "Approved",
+  status: statuses[i % statuses.length],
 }));
 
 export default function AdminDashboard() {
@@ -211,6 +213,7 @@ export default function AdminDashboard() {
               options={[
                 { value: "Pending", label: "Pending" },
                 { value: "Approved", label: "Approved" },
+                { value: "Rejected", label: "Rejected" },
               ]}
               placeholder="Status"
               triggerClassName="!h-8 text-sm font-medium bg-gray-100 border-gray-300 text-gray-700"
@@ -274,7 +277,9 @@ export default function AdminDashboard() {
                       className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
                         row.status === "Approved"
                           ? "bg-green-100 text-green-700"
-                          : "bg-yellow-100 text-yellow-700"
+                          : row.status === "Rejected"
+                            ? "bg-red-100 text-red-700"
+                            : "bg-yellow-100 text-yellow-700"
                       }`}
                     >
                       {row.status}
