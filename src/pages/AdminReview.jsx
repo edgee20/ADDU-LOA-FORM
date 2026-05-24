@@ -4,8 +4,7 @@ import { Button } from "#components/ui/button.jsx";
 import Inputs from "#components/Inputs.jsx";
 import DropDown from "#components/DropDown.jsx";
 import ConfirmationDialog from "#components/ConfirmationDialog.jsx";
-
-const steps = ["Dept. Chair", "Asst. Dean", "Dean", "Registrar"];
+import { getApprovalRoster } from "#lib/approvalWorkflow.js";
 
 export default function AdminReview() {
   const navigate = useNavigate();
@@ -14,8 +13,10 @@ export default function AdminReview() {
   const [isApproveOpen, setIsApproveOpen] = useState(false);
   const data = useMemo(
     () => ({
+      department: "School of Arts and Sciences (SAS)",
       email: "efliu@addu.edu.ph",
       currentCourse: "Bachelor of Science in Computer Science",
+      program: "Computer Science",
       idNumber: "1234567890",
       firstName: "Ej",
       lastName: "Liu",
@@ -24,42 +25,57 @@ export default function AdminReview() {
       lastSemester: "2nd",
       reason:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      currentApprovalStep: 2,
     }),
     [id],
   );
 
-  const activeStep = 1;
+  const activeStep = data.currentApprovalStep;
+  const approvalChain = useMemo(
+    () =>
+      getApprovalRoster({
+        department: data.department,
+        course: data.program,
+      }),
+    [data.department, data.program],
+  );
 
   return (
     <div className="min-h-screen">
       <div className="md:min-w-xl px-4 md:px-24 lg:px-40">
-        <div className="flex items-center justify-center py-6">
-          <div className="flex items-center gap-4">
-            {steps.map((step, index) => {
-              const isActive = index === activeStep - 1;
-              const isComplete = index < activeStep - 1;
-              return (
-                <div className="flex items-center" key={step}>
+        <div className="py-6">
+          <div className="relative mx-auto w-full max-w-5xl px-3 pt-2">
+            <div className="absolute left-3 right-3 top-5 h-0.5 rounded-full bg-[#0b1260]" />
+            <div className="absolute left-3 top-5 h-0.5 w-[12.5%] rounded-full bg-green-500" />
+
+            <div className="relative grid grid-cols-4 items-start gap-0">
+              {approvalChain.map((step, index) => {
+                const isComplete = index < activeStep - 1;
+                const isCurrent = index === activeStep - 1;
+
+                return (
                   <div
-                    className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold ${
-                      isActive
-                        ? "bg-green-500 text-white"
-                        : isComplete
-                          ? "bg-green-500 text-white"
-                          : "bg-gray-300 text-gray-700"
-                    }`}
+                    className="flex flex-col items-center"
+                    key={step.key}
                   >
-                    {index + 1}
+                    <div
+                      className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold shadow-sm ${
+                        isComplete
+                          ? "bg-green-500 text-white"
+                          : isCurrent
+                            ? "border-[3px] border-white bg-[#0b1260] text-white"
+                            : "bg-[#0b1260] text-white"
+                      }`}
+                    >
+                      {index + 1}
+                    </div>
+                    <div className="mt-3 text-center text-sm text-[#0b1260]">
+                      {step.label}
+                    </div>
                   </div>
-                  <div className="ml-2 text-xs text-gray-600 whitespace-nowrap">
-                    {step}
-                  </div>
-                  {index !== steps.length - 1 && (
-                    <div className="mx-3 h-[2px] w-12 bg-gray-300" />
-                  )}
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
 
