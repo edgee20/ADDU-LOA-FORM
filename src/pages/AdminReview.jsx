@@ -275,13 +275,13 @@ export default function AdminReview() {
         <div className="mt-6 flex items-center justify-between">
           <Button
             variant="outline"
-            className="border-red-500 text-red-600 hover:bg-red-50"
+            className="border-red-500 text-red-600 hover:bg-red-50 px-8 py-3 text-base font-semibold"
             onClick={() => setIsRejectOpen(true)}
           >
             Reject
           </Button>
           <Button
-            className="bg-[#0b1260] text-white hover:bg-[#0a104e]"
+            className="bg-[#0b1260] text-white hover:bg-[#0a104e] px-8 py-3 text-base font-semibold"
             onClick={() => setIsApproveOpen(true)}
           >
             Approve
