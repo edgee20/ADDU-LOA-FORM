@@ -4,14 +4,102 @@ import { Button } from "#components/ui/button.jsx";
 import Inputs from "#components/Inputs.jsx";
 import DropDown from "#components/DropDown.jsx";
 import ConfirmationDialog from "#components/ConfirmationDialog.jsx";
-
-const steps = ["Dept. Chair", "Asst. Dean", "Dean", "Registrar"];
+import ProgressBar, { TEST_STATES } from "#components/ProgressBar.jsx";
 
 export default function AdminReview() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [isRejectOpen, setIsRejectOpen] = useState(false);
   const [isApproveOpen, setIsApproveOpen] = useState(false);
+  const [testMode, setTestMode] = useState(false);
+  const testStateKeys = Object.keys(TEST_STATES);
+  const [currentTestStateIndex, setCurrentTestStateIndex] = useState(0);
+
+  // Workflow state
+  const [deptChair, setDeptChair] = useState(false);
+  const [asstDean, setAsstDean] = useState(false);
+  const [dean, setDean] = useState(false);
+  const [registrar, setRegistrar] = useState(false);
+  const [isRejected, setIsRejected] = useState(true);
+
+  const stateMap = {
+    deptChair: { value: deptChair, setter: setDeptChair },
+    asstDean: { value: asstDean, setter: setAsstDean },
+    dean: { value: dean, setter: setDean },
+    registrar: { value: registrar, setter: setRegistrar },
+  };
+
+  const steps = [
+    { id: "deptChair" },
+    { id: "asstDean" },
+    { id: "dean" },
+    { id: "registrar" },
+  ];
+
+  // Determine current active step index
+  const getCurrentStep = () => {
+    if (isRejected) return -1;
+    if (!deptChair) return 0;
+    if (!asstDean) return 1;
+    if (!dean) return 2;
+    if (!registrar) return 3;
+    return -1;
+  };
+
+  const currentStep = getCurrentStep();
+
+  // Get workflow status message
+  const getWorkflowStatus = () => {
+    const stepLabels = ["Dept. Chair", "Asst. Dean", "Dean", "Registrar"];
+
+    if (isRejected) {
+      return "Request rejected. Workflow halted.";
+    }
+
+    if (currentStep === -1) {
+      return "All approvals complete.";
+    }
+
+    const approvedSteps = [];
+    if (deptChair) approvedSteps.push("Dept. Chair");
+    if (asstDean) approvedSteps.push("Asst. Dean");
+    if (dean) approvedSteps.push("Dean");
+    if (registrar) approvedSteps.push("Registrar");
+
+    const approvedText =
+      approvedSteps.length > 0
+        ? `Approved by: ${approvedSteps.join(", ")}. `
+        : "";
+    const nextStep = stepLabels[currentStep];
+
+    return `${approvedText}Currently reviewing: ${nextStep}`;
+  };
+
+  // Handle approve action - ONLY called after user confirms on Submit page
+  const handleApproveStep = () => {
+    if (currentStep === -1 || isRejected) return;
+    const stepId = steps[currentStep].id;
+    stateMap[stepId].setter(true);
+  };
+
+  // Handle reject action - ONLY called after user confirms on Reject page
+  const handleRejectStep = () => {
+    if (currentStep === -1) return;
+    setIsRejected(true);
+  };
+
+  // Handle approve action when confirmed
+  const handleApproveConfirmed = () => {
+    handleApproveStep();
+    navigate("/admin");
+  };
+
+  // Handle reject action when confirmed
+  const handleRejectConfirmed = () => {
+    handleRejectStep();
+    navigate("/admin");
+  };
+
   const data = useMemo(
     () => ({
       email: "efliu@addu.edu.ph",
@@ -28,40 +116,70 @@ export default function AdminReview() {
     [id],
   );
 
-  const activeStep = 1;
-
   return (
     <div className="min-h-screen">
       <div className="md:min-w-xl px-4 md:px-24 lg:px-40">
-        <div className="flex items-center justify-center py-6">
-          <div className="flex items-center gap-4">
-            {steps.map((step, index) => {
-              const isActive = index === activeStep - 1;
-              const isComplete = index < activeStep - 1;
-              return (
-                <div className="flex items-center" key={step}>
-                  <div
-                    className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold ${
-                      isActive
-                        ? "bg-green-500 text-white"
-                        : isComplete
-                          ? "bg-green-500 text-white"
-                          : "bg-gray-300 text-gray-700"
-                    }`}
-                  >
-                    {index + 1}
-                  </div>
-                  <div className="ml-2 text-xs text-gray-600 whitespace-nowrap">
-                    {step}
-                  </div>
-                  {index !== steps.length - 1 && (
-                    <div className="mx-3 h-[2px] w-12 bg-gray-300" />
-                  )}
-                </div>
-              );
-            })}
+        <ProgressBar
+          state={
+            testMode
+              ? TEST_STATES[testStateKeys[currentTestStateIndex]]
+              : {
+                  deptChair,
+                  asstDean,
+                  dean,
+                  registrar,
+                  isRejected,
+                }
+          }
+        />
+
+        {testMode && (
+          <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 space-y-3">
+            <div className="text-sm font-semibold text-blue-900">
+              TEST MODE: {testStateKeys[currentTestStateIndex]}
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() =>
+                  setCurrentTestStateIndex(
+                    (currentTestStateIndex - 1 + testStateKeys.length) %
+                      testStateKeys.length,
+                  )
+                }
+              >
+                ← Prev
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  setCurrentTestStateIndex(
+                    (currentTestStateIndex + 1) % testStateKeys.length,
+                  )
+                }
+              >
+                Next →
+              </Button>
+              <Button
+                variant="outline"
+                className="ml-auto"
+                onClick={() => setTestMode(false)}
+              >
+                Exit Test Mode
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
+
+        {!testMode && (
+          <Button
+            variant="outline"
+            className="mt-4 text-xs"
+            onClick={() => setTestMode(true)}
+          >
+            Enter Test Mode
+          </Button>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Inputs fieldName="Email" name="email" value={data.email} readOnly />
@@ -151,20 +269,22 @@ export default function AdminReview() {
         <ConfirmationDialog
           isOpen={isRejectOpen}
           onClose={() => setIsRejectOpen(false)}
-          onConfirm={() => navigate("/Reject")}
+          onConfirm={handleRejectConfirmed}
           title="REJECT SUBMISSION"
           description="Are you sure you want to reject this form submission? This action cannot be undone."
           confirmText="Reject"
           confirmVariant="destructive"
+          workflowStatus={getWorkflowStatus()}
         />
 
         <ConfirmationDialog
           isOpen={isApproveOpen}
           onClose={() => setIsApproveOpen(false)}
-          onConfirm={() => navigate("/Submit")}
+          onConfirm={handleApproveConfirmed}
           title="APPROVE SUBMISSION"
           description="Are you sure you want to approve this form submission? This action cannot be undone."
           confirmText="Approve"
+          workflowStatus={getWorkflowStatus()}
         />
       </div>
     </div>

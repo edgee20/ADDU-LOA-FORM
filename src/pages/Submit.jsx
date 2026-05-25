@@ -1,7 +1,20 @@
+import { useNavigate, useLocation } from "react-router-dom";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "../components/ui/button";
 
 function Submit() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleContinue = () => {
+    // Store the confirmed action in sessionStorage so AdminReview can execute it
+    const action = location.state?.action || "approve";
+    sessionStorage.setItem("actionCompleted", JSON.stringify({ type: action }));
+
+    // Navigate back to AdminReview
+    navigate(-1);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4">
       {/* Success Checkmark */}
@@ -27,12 +40,9 @@ function Submit() {
       {/* Continue Button */}
       <Button
         variant="default"
-              style={{ backgroundColor: "#2F3590" }}
-              className="text-white w-41 h-12"
-        onClick={() => {
-          // Handle continue action
-          console.log("Continue clicked");
-        }}
+        style={{ backgroundColor: "#2F3590" }}
+        className="text-white w-41 h-12"
+        onClick={handleContinue}
       >
         Continue
       </Button>

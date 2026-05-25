@@ -18,6 +18,7 @@ export default function ConfirmationDialog({
   description,
   confirmText,
   confirmVariant = "default",
+  workflowStatus,
 }) {
   const confirmButtonClass = {
     default: "bg-[#2F3590] hover:bg-[#2F3590]/90",
