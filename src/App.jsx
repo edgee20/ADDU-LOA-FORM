@@ -1,4 +1,5 @@
 import "./App.css";
+import { Toaster } from "sonner";
 import Auth from "./pages/Auth";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
@@ -12,6 +13,7 @@ import Reject from "./pages/Reject";
 function App() {
   return (
     <BrowserRouter>
+      <Toaster position="top-right" richColors />
       <Routes>
         {/* WITH NAVBAR + FOOTER */}
         <Route element={<MainLayout />}>

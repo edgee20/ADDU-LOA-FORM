@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "#components/ui/button.jsx";
 import Inputs from "#components/Inputs.jsx";
 import DropDown from "#components/DropDown.jsx";
@@ -91,12 +93,20 @@ export default function AdminReview() {
   // Handle approve action when confirmed
   const handleApproveConfirmed = () => {
     handleApproveStep();
+    toast.success("Request successfully approved!", {
+      description: "Moving to the next reviewer in the workflow.",
+      duration: 4000,
+    });
     navigate("/admin");
   };
 
   // Handle reject action when confirmed
   const handleRejectConfirmed = () => {
     handleRejectStep();
+    toast.error("Request has been rejected!", {
+      description: "The workflow has been halted.",
+      duration: 4000,
+    });
     navigate("/admin");
   };
 
@@ -119,19 +129,31 @@ export default function AdminReview() {
   return (
     <div className="min-h-screen">
       <div className="md:min-w-xl px-4 md:px-24 lg:px-40">
-        <ProgressBar
-          state={
-            testMode
-              ? TEST_STATES[testStateKeys[currentTestStateIndex]]
-              : {
-                  deptChair,
-                  asstDean,
-                  dean,
-                  registrar,
-                  isRejected,
-                }
-          }
-        />
+        <div className="flex items-center gap-4 mb-6">
+          <button
+            onClick={() => navigate("/admin")}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
+            aria-label="Go back"
+          >
+            <ArrowLeft className="w-6 h-6 text-gray-700" />
+          </button>
+
+          <div className="flex-1">
+            <ProgressBar
+              state={
+                testMode
+                  ? TEST_STATES[testStateKeys[currentTestStateIndex]]
+                  : {
+                      deptChair,
+                      asstDean,
+                      dean,
+                      registrar,
+                      isRejected,
+                    }
+              }
+            />
+          </div>
+        </div>
 
         {testMode && (
           <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 space-y-3">

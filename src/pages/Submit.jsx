@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { CheckCircle2 } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "../components/ui/button";
 
 function Submit() {
@@ -11,8 +12,16 @@ function Submit() {
     const action = location.state?.action || "approve";
     sessionStorage.setItem("actionCompleted", JSON.stringify({ type: action }));
 
-    // Navigate back to AdminReview
-    navigate(-1);
+    // Show success toast
+    toast.success("Request successfully approved!", {
+      description: "The approval has been recorded and logged.",
+      duration: 4000,
+    });
+
+    // Navigate back after a small delay to ensure toast renders
+    setTimeout(() => {
+      navigate("/admin");
+    }, 500);
   };
 
   return (

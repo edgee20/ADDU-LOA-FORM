@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { CircleX } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "../components/ui/button";
 
 function Reject() {
@@ -11,8 +12,16 @@ function Reject() {
     const action = location.state?.action || "reject";
     sessionStorage.setItem("actionCompleted", JSON.stringify({ type: action }));
 
-    // Navigate back to AdminReview
-    navigate(-1);
+    // Show rejection toast
+    toast.error("Request has been rejected!", {
+      description: "The student will be notified of the rejection.",
+      duration: 4000,
+    });
+
+    // Navigate back after a small delay to ensure toast renders
+    setTimeout(() => {
+      navigate("/admin");
+    }, 500);
   };
 
   return (

@@ -19,7 +19,7 @@ export default function Navbar({ user }) {
           style={{ fontFamily: "'Trajan'" }}
         >
           <div className="text-3xl">ATENEO DE DAVAO UNIVERSITY</div>
-          <div className="text-[15px]">STRONG IN FAITH THAT DOES JUSTICE </div>
+          <div className="text-[15px] py-1">STRONG IN FAITH THAT DOES JUSTICE </div>
         </div>
       </div>
 

@@ -93,7 +93,7 @@ export default function AdminDashboard() {
     <div className="min-h-screen">
       <div className="md:min-w-xl px-4 md:px-24 lg:px-40">
         <h1
-          className="text-2xl md:text-3xl font-bold mb-6"
+          className="text-2xl md:text-3xl font-bold mb-6 py-5 pt-7"
           style={{ fontFamily: "'Trajan'" }}
         >
           Leave of Absence Submissions
